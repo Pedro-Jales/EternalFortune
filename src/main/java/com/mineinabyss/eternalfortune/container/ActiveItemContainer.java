@@ -13,7 +13,7 @@ public class ActiveItemContainer implements ItemContainer {
     private Player owner;
     private Location location;
     private List<ItemStack> content;
-    private List<Entity> managedEntities;
+    private Entity managedEntity;
 
     /**
      * ItemContainer to store values after deserialization of a SerializableItemContainer.
@@ -22,14 +22,14 @@ public class ActiveItemContainer implements ItemContainer {
      * @param owner owner
      * @param location location
      * @param content content
-     * @param managedEntities managedEntities
+     * @param managedEntity managedEntities
      */
-    public ActiveItemContainer(Long protection, Player owner, Location location, List<ItemStack> content, List<Entity> managedEntities) {
+    public ActiveItemContainer(Long protection, Player owner, Location location, List<ItemStack> content, Entity managedEntity) {
         this.protection = protection;
         this.owner = owner;
         this.location = location;
         this.content = content;
-        this.managedEntities = managedEntities;
+        this.managedEntity = managedEntity;
     }
 
     /**
@@ -74,13 +74,12 @@ public class ActiveItemContainer implements ItemContainer {
     }
 
     /**
-     * Returns the entities displaying info about the container.
+     * Returns the entity displaying info about the container.
      *
-     * @return entities
+     * @return entity
      */
-    @Override
-    public List<Entity> getManagedEntities() {
-        return managedEntities;
+    public Entity getManagedEntity() {
+        return managedEntity;
     }
 
     /**
@@ -91,7 +90,7 @@ public class ActiveItemContainer implements ItemContainer {
      * @return container
      */
     public static ActiveItemContainer from(SerializableItemContainer container) {
-        return new ActiveItemContainer(container.getProtection(), container.getOwner(), container.getLocation(), container.getContent(), container.getManagedEntities());
+        return new ActiveItemContainer(container.getProtection(), container.getOwner(), container.getLocation(), container.getContent(), container.getManagedEntity());
     }
 
 }

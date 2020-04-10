@@ -1,6 +1,6 @@
 name: 'EternalFortune'
 version: '1.0.0'
-api-version: '1.13'
+api-version: '1.15'
 main: 'com.mineinabyss.eternalfortune.EternalFortunePlugin'
 author: 'IB2H'
 description: 'Keep items in a container on player death.'

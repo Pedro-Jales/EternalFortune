@@ -17,6 +17,6 @@ public interface ItemContainer {
 
     List<ItemStack> getContent();
 
-    List<Entity> getManagedEntities();
+    Entity getManagedEntity();
 
 }

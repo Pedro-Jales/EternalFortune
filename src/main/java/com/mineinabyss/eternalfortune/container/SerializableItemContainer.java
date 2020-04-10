@@ -2,13 +2,15 @@ package com.mineinabyss.eternalfortune.container;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class SerializableItemContainer implements ItemContainer, Serializable {
@@ -16,7 +18,7 @@ public class SerializableItemContainer implements ItemContainer, Serializable {
     private Long protection;
     private UUID owner;
     private Map<String, Object> location;
-    private List<UUID> managedEntities = new ArrayList<>();
+    private UUID managedEntity;
     private List<Map<String, Object>> content = new ArrayList<>();
 
     /**
@@ -26,14 +28,14 @@ public class SerializableItemContainer implements ItemContainer, Serializable {
      * @param owner owner
      * @param location location
      * @param content content
-     * @param managedEntities managedEntities
+     * @param managedEntity managedEntity
      */
-    public SerializableItemContainer(Long protection, Player owner, Location location, ItemStack[] content, AreaEffectCloud... managedEntities) {
+    public SerializableItemContainer(Long protection, Player owner, Location location, List<ItemStack> content, Entity managedEntity) {
         this.protection = protection;
         this.owner = owner.getUniqueId();
         this.location = location.serialize();
-        Arrays.stream(content).forEach(item -> this.content.add(item.serialize()));
-        Arrays.stream(managedEntities).forEach(entity -> this.managedEntities.add(entity.getUniqueId()));
+        content.forEach(item -> this.content.add(item.serialize()));
+        this.managedEntity = managedEntity.getUniqueId();
     }
 
     /**
@@ -78,13 +80,13 @@ public class SerializableItemContainer implements ItemContainer, Serializable {
     }
 
     /**
-     * Get entities by their UUIDs and return them.
+     * Gets the managed entity by her uuid and returns it.
      *
-     * @return entities
+     * @return entity
      */
     @Override
-    public List<Entity> getManagedEntities() {
-        return managedEntities.stream().map(Bukkit::getEntity).collect(Collectors.toList());
+    public Entity getManagedEntity() {
+        return Bukkit.getEntity(managedEntity);
     }
 
 }
